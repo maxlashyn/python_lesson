@@ -30,62 +30,74 @@ class Position:
         self.y =y
 
 
-def print_field(field):
-    for val in field:
-        print(' '.join(val))
-
-
 def init(x, y):
     return [[DEAD if randint(0, 1) == 0 else LIFE for i in range(x)] for j in range(y)]
 
 
-def neighbors_count(field, position: Position):
-    neighbors = 0
-    for dy in [-1, 0, 1]:
-        for dx in [-1, 0, 1]:
-            if dx == 0 and dy == 0:
-                continue
-            nx = position.x + dx
-            ny = position.y + dy
-            if nx < 0 or ny < 0:
-                neighbors += 1
-                continue
-            if nx > (WIDTH - 1) or ny > (HIEGHT - 1):
-                neighbors += 1
-                continue
-            neighbors += 1 if field[nx][ny] == LIFE else 0
-    return neighbors
+class Field:
+    def __init__(self, width: int, height: int) -> None:
+        self.field  = init(width, height) 
+        self.height = height
+        self.width = width
 
+    def print_field(self):
+        for val in self.field:
+            print(' '.join(val))
 
-def life_or_dead(clone_field, field, neighbors, position: Position):
-    if neighbors <= 1:
-        clone_field[position.x][position.y] = DEAD
-    if neighbors == 2:
-        clone_field[position.x][position.y] = field[position.x][position.y]
-    if neighbors == 3:
-        clone_field[position.x][position.y] = LIFE
-    if neighbors > 3:
-        clone_field[position.x][position.y] = DEAD
-    return clone_field
+    def neighbors_count(self, position: Position):
+        neighbors = 0
+        for dy in [-1, 0, 1]:
+            for dx in [-1, 0, 1]:
+                if dx == 0 and dy == 0:
+                    continue
+                nx = position.x + dx
+                ny = position.y + dy
+                if nx < 0 or ny < 0:
+                    neighbors += 1
+                    continue
+                if nx > (self.width - 1) or ny > (self.height - 1):
+                    neighbors += 1
+                    continue
+                neighbors += 1 if self.field[nx][ny] == LIFE else 0
+        return neighbors
 
-LIFE = 'X'
-DEAD = ' '
-WIDTH = 10
-HIEGHT = 10
+    def life_or_dead(self, position: Position, neighbors):
+        if neighbors <= 1:
+            cell = DEAD
+        if neighbors == 2:
+            cell = self.field[position.x][position.y]
+        if neighbors == 3:
+            cell = LIFE
+        if neighbors > 3:
+            cell = DEAD
+        return cell
 
-def game(field):
-    while True:
-        print_field(field)
+    def replace(self, clone_field):
+        self.field = clone_field.copy()
+
+class Game:
+    def __init__(self, width: int, height: int) -> None:
+        self.field = Field(width, height)
+    
+    def step(self):
+        self.field.print_field()
         input('next step?')
 
         clone_field = init(WIDTH, HIEGHT)
         for y in range(HIEGHT):
             for x in range(WIDTH):
                 position = Position(x, y)
-                neighbors = neighbors_count(field, position)
-                clone_field = life_or_dead(clone_field, field,neighbors, position)
-        field = clone_field.copy() 
+                neighbors = self.field.neighbors_count(position)
+                clone_field[x][y] = self.field.life_or_dead(position, neighbors)
+        self.field.replace(clone_field)
+        
+
+LIFE = 'X'
+DEAD = ' '
+WIDTH = 10
+HIEGHT = 10
 
 if __name__ == '__main__':
-    field = init(WIDTH, HIEGHT)
-    game(field)
+    game = Game(WIDTH, HIEGHT)
+    while True:
+        game.step()
