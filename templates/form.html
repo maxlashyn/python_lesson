@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+{{ request }}
+<form>
+    <input type="text" name="input_text" value="default value"/>
+    <input type="password" name="input_password" value="default value"/>
+
+    <input type="hidden" name="input_hidden" value="12"/>
+
+    <input type="checkbox" name="input_checkbox" checked/>
+
+    <label for="input_radio">Text</label>
+    <input type="radio" name="input_radio" value="1"/>
+    <input type="radio" name="input_radio" value="2"/>
+    <input type="radio" name="input_radio" value="3"/>
+
+    <select name="select">
+        <option value="1">value_1</option>
+        <option value="2">value_2</option>
+        <option value="3">value_3</option>
+    </select>
+    <select name="multiselect[]" multiple>
+        <option value="1">value_1</option>
+        <option value="2">value_2</option>
+        <option value="3">value_3</option>
+    </select>
+    <textarea name="texarea_input" cols="3" rows="5"></textarea>
+    <button type="submit" name="button" value="search">text</button>
+
+</form>
+
+</body>
+</html>

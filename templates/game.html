@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start Game</title>
+</head>
+<body>
+<form action="{{ url_for('init') }}" method="post">
+    <label >Введите слово</label>
+    <input type="text" name="input_word" value="default value"/>
+    <label >Введите значение</label>
+    <input type="number" name="input_life" value="default value"/>
+    <button type="submit" name="button">start</button>
+</form>
+</body>
+</html>

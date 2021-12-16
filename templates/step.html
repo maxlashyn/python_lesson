@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Step</title>
+</head>
+<body>
+<form action="{{url_for('step')}}" method="post">
+     <label >Количество жизней</label>
+    <input type="text" name="life" value="{{life}}" readonly/>
+     <label >Угаданные буквы</label>
+    <input type="text" name="guess_chars" value="{{guess_chars}}" readonly/>
+    <input type="hidden" name="word" value="{{word}}"/>
+     <label >Введите букву</label>
+    <input type="text" name="char" value=""/>
+    <button type="submit" name="button" >send</button>
+</form>
+</body>
+</html>
