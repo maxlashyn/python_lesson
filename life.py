@@ -24,72 +24,68 @@ for x in range(0, size):
 field = clone
 """
 
+class Position:
+    def __init__(self, x:int, y:int) -> None:
+        self.x =x
+        self.y =y
+
 
 def print_field(field):
     for val in field:
         print(' '.join(val))
 
 
-def clone_f(WIDTH, HIEGHT):
-    clone_field = init(WIDTH, HIEGHT)
-
-
 def init(x, y):
     return [[DEAD if randint(0, 1) == 0 else LIFE for i in range(x)] for j in range(y)]
 
 
-def coordinates(HIEGHT, WIDTH, field):
-    for y in range(HIEGHT):
-        for x in range(WIDTH):
-            neighbors = 0
-            for dy in [-1, 0, 1]:
-                for dx in [-1, 0, 1]:
-                    if dx == 0 and dy == 0:
-                        continue
-                    nx = x + dx
-                    ny = y + dy
-                    if nx < 0 or ny < 0:
-                        neighbors += 1
-                        continue
-                    if nx > (WIDTH - 1) or ny > (HIEGHT - 1):
-                        neighbors += 1
-                        continue
-                    neighbors += 1 if field[nx][ny] == LIFE else 0
+def neighbors_count(field, position: Position):
+    neighbors = 0
+    for dy in [-1, 0, 1]:
+        for dx in [-1, 0, 1]:
+            if dx == 0 and dy == 0:
+                continue
+            nx = position.x + dx
+            ny = position.y + dy
+            if nx < 0 or ny < 0:
+                neighbors += 1
+                continue
+            if nx > (WIDTH - 1) or ny > (HIEGHT - 1):
+                neighbors += 1
+                continue
+            neighbors += 1 if field[nx][ny] == LIFE else 0
+    return neighbors
 
 
-def neighbors(DEAD, LIFE, neighbors):
-    clone_f(WIDTH, HIEGHT)
+def life_or_dead(clone_field, field, neighbors, position: Position):
     if neighbors <= 1:
-        clone_field[x][y] = DEAD
+        clone_field[position.x][position.y] = DEAD
     if neighbors == 2:
-        clone_field[x][y] = field[x][y]
+        clone_field[position.x][position.y] = field[position.x][position.y]
     if neighbors == 3:
-        clone_field[x][y] = LIFE
+        clone_field[position.x][position.y] = LIFE
     if neighbors > 3:
-        clone_field[x][y] = DEAD
-
-
-def end(field, clone_field):
-    field = clone_field.copy()
-
+        clone_field[position.x][position.y] = DEAD
+    return clone_field
 
 LIFE = 'X'
 DEAD = ' '
 WIDTH = 10
 HIEGHT = 10
 
-
-def main(WIDTH, HIEGHT):
-    if __name__ == '__main__':
-        field = init(WIDTH, HIEGHT)
-
-
-def Game(clone_field):
+def game(field):
     while True:
         print_field(field)
         input('next step?')
 
-        coordinates(HIEGHT, WIDTH)
-        neighbors(DEAD, LIFE, neighbors)
+        clone_field = init(WIDTH, HIEGHT)
+        for y in range(HIEGHT):
+            for x in range(WIDTH):
+                position = Position(x, y)
+                neighbors = neighbors_count(field, position)
+                clone_field = life_or_dead(clone_field, field,neighbors, position)
+        field = clone_field.copy() 
 
-    end(field, clone_field)
+if __name__ == '__main__':
+    field = init(WIDTH, HIEGHT)
+    game(field)
