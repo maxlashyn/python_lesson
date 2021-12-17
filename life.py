@@ -1,4 +1,5 @@
 from random import randint
+import json
 
 """
 Игра Жизнь (Конвея)
@@ -31,7 +32,7 @@ class Position:
 
 
 def init(x, y):
-    return [[DEAD if randint(0, 1) == 0 else LIFE for i in range(x)] for j in range(y)]
+    return [[DEAD if randint(0, 1) == 0 else LIFE for i in range(y)] for j in range(x)]
 
 
 class Field:
@@ -39,6 +40,9 @@ class Field:
         self.field  = init(width, height) 
         self.height = height
         self.width = width
+
+    def cell(self, x, y):
+        return self.field[x][y]
 
     def print_field(self):
         for val in self.field:
@@ -62,6 +66,7 @@ class Field:
         return neighbors
 
     def life_or_dead(self, position: Position, neighbors):
+        cell= DEAD
         if neighbors <= 1:
             cell = DEAD
         if neighbors == 2:
@@ -75,14 +80,20 @@ class Field:
     def replace(self, clone_field):
         self.field = clone_field.copy()
 
+    def serialize(self):
+        return json.dumps(self.field)
+
+    def deserialize(self, string):
+        self.replace(json.loads(string))
+
 class Game:
     def __init__(self, width: int, height: int) -> None:
         self.field = Field(width, height)
-    
-    def step(self):
-        self.field.print_field()
-        input('next step?')
 
+    def print_field(self):
+        self.field.print_field()
+
+    def step(self):
         clone_field = init(WIDTH, HIEGHT)
         for y in range(HIEGHT):
             for x in range(WIDTH):
@@ -90,7 +101,16 @@ class Game:
                 neighbors = self.field.neighbors_count(position)
                 clone_field[x][y] = self.field.life_or_dead(position, neighbors)
         self.field.replace(clone_field)
-        
+
+    def cell(self, x, y):
+        return self.field.cell(x,y)
+
+    def serialize(self):
+        return self.field.serialize()
+
+    def deserialize(self, string):
+        return self.field.deserialize(string)
+
 
 LIFE = 'X'
 DEAD = ' '
@@ -99,5 +119,6 @@ HIEGHT = 10
 
 if __name__ == '__main__':
     game = Game(WIDTH, HIEGHT)
-    while True:
+    while input('next step?'):
+        game.print_field()
         game.step()

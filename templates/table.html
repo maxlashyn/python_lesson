@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    {% for y in range(height) %}
+    <tr>
+        {% for x in range(width) %}
+        <td>
+            {% if game.cell(x,y) == 'X' %}
+            o
+            {% else %}
+            &nbsp;
+            {% endif%}
+
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
+<form action="{{ url_for('step') }}" method="post">
+    <input type="hidden" name="width" value="{{width}}"/>
+    <input type="hidden" name="height" value="{{height}}"/>
+    <input type="hidden" name="field" value="{{game.serialize()}}"/>
+    <button type="submit" name="button">step</button>
+</form>
+</body>
+</html>

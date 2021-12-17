@@ -7,5 +7,17 @@
 <body>
 kjhd;klj;dalkfja;df ;ld f;ladf ;ladf j;laf asdfkad;fadkjf;adf
 {{ sub }}
+<table>
+    {% for y in height %}
+    <tr>
+        {% for x in width %}
+        <td>
+            {{ field[x][y] }}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
 </body>
 </html>

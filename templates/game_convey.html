@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start Game </title>
+</head>
+<body>
+<form action="{{ url_for('init_game') }}" method="post">
+    <label >Укажите количество столбцов для начальной таблицы игры</label>
+    <input type="number" name="width" value="0"/>
+    <label >Укажите количество рядов для начальной таблицы игры</label>
+    <input type="number" name="height" value="0"/>
+    <button type="submit" name="button">start</button>
+</body>
+</html>
