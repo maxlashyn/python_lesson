@@ -23,12 +23,111 @@
 - вывести состояние персонажей
 
 3. написать юниттесты для этих классов
+
+
+Игровые объекты неподвижные
+4. Добавить игровые объекты:
+гора(нельзя испльзовать, нельзя пройти),
+дерево(можно использовать, нельзя пройти),
+зелье(можно испоьзовать, можно пройти),
+ручей(нельзя использовать, можно пройти)
+
+Персонажи могут ходить, бегать, кушать
+5. Добавить персонажей:
+волк(может кусать),
+человек(может рубить, хилиться, защищаться, может носить экипировку),
+орк(может рубить, хилиться, защищаться, может носить экипировку),
+оборотень(может кусать, может хилиться)
+
 """
 
 from random import randint
+from abc import ABC, abstractmethod
+
+class Object(ABC):
+    def __init__(self, capability: list):
+        self.capability = capability
+
+class Features:
+    def __init__(self, hp, strenght, agility, intellect):
+        self.intellect = intellect
+        self.agility = agility
+        self.strenght = strenght
+        self.hp = hp
+
+class Alive(Object):
+    def __init__(self, name: str, features: Features, capability: list):
+        super().__init__(capability)
+        self.name = name
+        self.default_features = features
+        self.current_features = features
 
 
-# 1
+class Lifeless(Object):
+    def __init__(self, name: str, capability: list):
+        super().__init__(capability)
+        self.name = name
+
+
+class Action(ABC):
+    @abstractmethod
+    def action(self, obj: Object):
+        pass
+
+class Cut(Action):
+    def action(self, obj:Object):
+        pass
+
+
+class Bite(Action):
+    def action(self, obj:Object):
+        pass
+
+
+class Def(Action):
+    def action(self, obj:Object):
+        pass
+
+
+class Heal(Action):
+    def action(self, obj:Object):
+        pass
+
+
+class WearArmor(Action):
+    def action(self, obj:Object):
+        pass
+
+
+class Mountains(Lifeless):
+    pass
+
+class Tree(Lifeless):
+    pass
+
+class Potion(Lifeless):
+    pass
+
+
+class River(Lifeless):
+    pass
+
+class Wolf(Alive):
+    pass
+
+
+class Human(Alive):
+    pass
+
+
+class Orc(Alive):
+    pass
+
+
+class Werewolf(Alive):
+    pass
+
+
 
 class PlayerState:
     def __init__(self, name, life):
