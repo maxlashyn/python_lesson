@@ -1,12 +1,14 @@
 from flask import Flask, request, render_template
 import random
+from bitcoin.bitcoin import bitcoin_blueprint
 
 app = Flask(__name__)
 
+app.register_blueprint(bitcoin_blueprint, url_prefix = "/btc")
 
-@app.route('/get', methods=['GET'])  # получить что-то
+@app.route('/', methods=['GET'])  # получить что-то
 def get():
-    return request.values
+    return render_template('index.html')
 
 
 @app.route('/post', methods=['POST'])  # сохранить что-то
@@ -31,7 +33,7 @@ def test_params(get_id: int, name):
 
 @app.route('/test2/<path:sub>', methods=['GET'])
 def test_params2(sub):
-    return render_template('index.html', sub=sub)
+    return render_template('test2.html', sub=sub)
 
 
 """

@@ -2,22 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Main page</title>
 </head>
 <body>
-kjhd;klj;dalkfja;df ;ld f;ladf ;ladf j;laf asdfkad;fadkjf;adf
-{{ sub }}
-<table>
-    {% for y in height %}
-    <tr>
-        {% for x in width %}
-        <td>
-            {{ field[x][y] }}
-        </td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-
-</table>
+<ul>
+    <li><a href="{{ url_for('bitcoin.bitcoin')}}">Bitcoin</a></li>
+</ul>
 </body>
 </html>
