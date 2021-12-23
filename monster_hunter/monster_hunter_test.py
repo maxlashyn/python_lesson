@@ -1,4 +1,4 @@
-from monster_hunter import PlayerState, Player, Game
+from monster_hunter.monster_hunter import PlayerState, Player, Game
 
 
 def test_player_state_init():

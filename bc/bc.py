@@ -18,26 +18,7 @@
 """
 
 import click
-class Stack:
-    def __init__(self):
-        self.__list = list()
-
-    def is_empty(self):
-        return self.size() == 0
-
-    def pop(self):
-        if self.is_empty():
-            return None
-        return self.__list.pop()
-
-    def push(self, number):
-        self.__list.append(number)
-
-    def size(self):
-        return len(self.__list)
-
-    def show(self):
-        print('=', self.__list)
+from bc.stack import Stack
 
 @click.group('main_group')
 def main_group():
@@ -48,7 +29,7 @@ def main_group():
 @main_group.command()
 @click.argument('evaluation', default='')
 def calc(evaluation: str):
-    from calc import process, available_operations
+    from bc.calc import process, available_operations
     result = 'undefined'
     if evaluation.count('+') > 0:
         number1, number2 = evaluation.split('+')
