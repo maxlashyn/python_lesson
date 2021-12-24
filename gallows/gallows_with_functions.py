@@ -96,7 +96,7 @@ class Game:
 
 
 def input_words():
-    with open('words.txt', 'r') as word_file:
+    with open('../words.txt', 'r') as word_file:
         return word_file.readline().lower().rstrip('\n')
 
     # return input('Загадайте слово:').lower()

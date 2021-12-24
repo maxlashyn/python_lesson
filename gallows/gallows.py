@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, url_for
+from flask import Blueprint, render_template, request
 
-app = Flask(__name__)
+gallows_blueprint = Blueprint('gallows', __name__, template_folder='templates')
 
 """
 1. создать экшен который выведет html-форму содержащую
@@ -22,23 +22,23 @@ app = Flask(__name__)
 
 
 # 1
-@app.route('/start', methods=['GET'])
+@gallows_blueprint.route('/', methods=['GET'])
 def start():
-    return render_template('game.html')
+    return render_template('gallows/game.html')
 
 
-@app.route('/init', methods=['POST'])
+@gallows_blueprint.route('/init', methods=['POST'])
 def init():
-    from gallows_with_functions import Game, Word, Life
+    from gallows.gallows_with_functions import Game, Word, Life
     word = request.form.get('input_word').lower().strip(' ')
     life = int(request.form.get('input_life'))
     game = Game(Word(word), Life(life))
-    return render_template('step.html', word=word, life=life, guess_chars=" ".join(game.get_guess_chars()))
+    return render_template('gallows/step.html', word=word, life=life, guess_chars=" ".join(game.get_guess_chars()))
 
 
-@app.route('/step', methods=['POST'])
+@gallows_blueprint.route('/step', methods=['POST'])
 def step():
-    from gallows_with_functions import Game, Word, Life
+    from gallows.gallows_with_functions import Game, Word, Life
     word = request.form.get('word')
     life = int(request.form.get('life'))
     guess_chars = request.form.get('guess_chars')
@@ -47,11 +47,10 @@ def step():
     char = request.form.get('char').lower().strip(' ')
     game.step(char)
     if game.is_win():
-        return render_template('win.html')
+        return render_template('gallows/win.html')
     if game.is_loose():
-        return render_template('loose.html')
-    return render_template('step.html', word=word, life=game.get_life(), guess_chars=" ".join(game.get_guess_chars()))
+        return render_template('gallows/loose.html')
+    return render_template('gallows/step.html', word=word, life=game.get_life(), guess_chars=" ".join(game.get_guess_chars()))
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+

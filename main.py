@@ -1,10 +1,19 @@
 from flask import Flask, request, render_template
 from bitcoin.bitcoin import bitcoin_blueprint
-
+from convey.convey import convey_blueprint
+from gallows.gallows import gallows_blueprint
 app = Flask(__name__)
 
 app.register_blueprint(bitcoin_blueprint, url_prefix="/btc")
 
+app.register_blueprint(convey_blueprint, url_prefix = "/start")
+
+app.register_blueprint(gallows_blueprint, url_prefix = "/start_gallows")
+"""
+1. Вынести в блюпринты convey и gallows, и переделать урлы если  надо
+2. В index.html прописать к ним ссылки
+3. в шаблонах этих блюпринтов добавить ссылки на главную страницу
+"""
 
 @app.route('/', methods=['GET'])  # получить что-то
 def get():

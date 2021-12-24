@@ -10,34 +10,32 @@
 
 """
 
-from flask import Flask, render_template,url_for,request
+from flask import Blueprint, render_template,request,url_for
 
-app = Flask(__name__)
+convey_blueprint = Blueprint('convey', __name__, template_folder='templates')
 
 
-@app.route('/start', methods=['GET'])
+@convey_blueprint.route('/', methods=['GET'])
 def start():
-    return render_template('game_convey.html')
+    return render_template('convey/game_convey.html')
 
 
-@app.route('/init', methods=['POST'])
+@convey_blueprint.route('/ method="post"', methods=['POST'])
 def init_game():
-    from life import Game
+    from convey.life import Game
     width = int(request.form.get('width'))
     height = int(request.form.get('height'))
     game = Game(width,height)
-    return render_template('table.html',width = width,height = height,game = game)
+    return render_template('convey/table.html', width = width, height = height, game = game)
 
-@app.route('/step',methods=['POST'])
+@convey_blueprint.route('/step',methods=['POST'])
 def step():
-    from life import Game
+    from convey.life import Game
     width = int(request.form.get('width'))
     height = int(request.form.get('height'))
     field = request.form.get('field')
     game = Game(width,height)
     game.deserialize(field)
     game.step()
-    return render_template('table.html',width = width,height = height,game = game)
+    return render_template('convey/table.html', width = width, height = height, game = game)
 
-if __name__ == '__main__':
-    app.run(debug=True)

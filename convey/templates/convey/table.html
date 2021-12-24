@@ -22,7 +22,7 @@
     {% endfor %}
 
 </table>
-<form action="{{ url_for('step') }}" method="post">
+<form action="{{ url_for('convey.step') }}" method="post">
     <input type="hidden" name="width" value="{{width}}"/>
     <input type="hidden" name="height" value="{{height}}"/>
     <input type="hidden" name="field" value="{{game.serialize()}}"/>
