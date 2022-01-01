@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
+    <style>
+        #first {
+            background: gold;
+        }
+        .first {
+            font-size: 30px;
+        }
+        .active > .first {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <ul>
-    <li><a href="{{ url_for('bitcoin.bitcoin')}}">Bitcoin</a></li>
-    <li><a href="{{ url_for('convey.start')}}">Convey</a></li>
-    <li><a href="{{ url_for('gallows.start')}}">Gallows</a></li>
+    <li><a id="first" class="first" href="{{ url_for('bitcoin.bitcoin')}}">Bitcoin</a></li>
+    <li class="active"><a class="first" href="{{ url_for('convey.start')}}">Convey</a></li>
+    <li><a class="first" href="{{ url_for('gallows.start')}}">Gallows</a></li>
+    <li><a class="first" href="{{ url_for('parsing.parse')}}">Parsing</a></li>
 </ul>
 </body>
 </html>

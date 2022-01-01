@@ -2,7 +2,10 @@ from flask import Flask, request, render_template
 from bitcoin.bitcoin import bitcoin_blueprint
 from convey.convey import convey_blueprint
 from gallows.gallows import gallows_blueprint
+from parsing.parsing import parsing_blueprint
 app = Flask(__name__)
+
+app.register_blueprint(parsing_blueprint, url_prefix="/parse")
 
 app.register_blueprint(bitcoin_blueprint, url_prefix="/btc")
 
