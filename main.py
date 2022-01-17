@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, make_response
 from bitcoin.bitcoin import bitcoin_blueprint
 from convey.convey import convey_blueprint
 from gallows.gallows import gallows_blueprint
@@ -20,7 +20,10 @@ app.register_blueprint(gallows_blueprint, url_prefix = "/start_gallows")
 
 @app.route('/', methods=['GET'])  # получить что-то
 def get():
-    return render_template('index.html')
+    cookie = int(request.cookies.get('game_step', 0))
+    response = make_response(render_template('index.html', cookie = cookie))
+    response.set_cookie('game_step', str(cookie + 1))
+    return response
 
 
 @app.route('/test/<int:get_id>/<name>', methods=['GET'])
